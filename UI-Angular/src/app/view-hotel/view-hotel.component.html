@@ -1,0 +1,62 @@
+<div style="overflow-y: auto; overflow-x: hidden; max-height: 600px;">
+    <h1 mat-dialog-title>{{data.name}}</h1>
+    <div mat-dialog-content>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="row">Host</th>
+                    <td scope="col">{{data.host_name}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Neighbourhood Group</th>
+                    <td scope="col">{{data.neighbourhood_group}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Neighbourhood</th>
+                    <td scope="col">{{data.neighbourhood}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Room Type</th>
+                    <td scope="col">{{data.room_type}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Price</th>
+                    <td scope="col">{{data.price}} $</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <mat-list>
+        <h3 mat-subheader>Reviews</h3>
+        <ng-container *ngFor="let review of reviews">
+            <div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <mat-icon [color]="review.rating > 3 ? '#00ff00' : 'warn'" mat-list-icon>
+                                {{review.rating > 3 ? 'thumb_up' : 'thumb_down'}}</mat-icon>
+                        </div>
+                        <div class="col-md-6"> <span>{{review.comment}}</span>
+                        </div>
+                        <div class="col-md-4"> <span style="float: right;">
+                                <ng-container *ngFor="let icon of getRange(review.rating)">
+                                    <mat-icon>{{icon}}</mat-icon>
+                                </ng-container>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <mat-divider></mat-divider>
+        </ng-container>
+    </mat-list>
+    <div style="margin-top: 20px;">
+        <mat-form-field style="width: 50%;">
+            <textarea matInput placeholder="Add your Comment" #comment></textarea>
+        </mat-form-field>
+        <input #rating placeholder="Rating" type="number" min="1" max="5" style="width: 20%; margin-left: 10px;">
+        <button mat-raised-button color="primary" style="margin-left: 20px;"
+            (click)="addComment(comment.value, rating.value)">Submit</button>
+    </div>
+</div>
